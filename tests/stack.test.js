@@ -3,7 +3,7 @@ const Stack = require('../src/stack');
 
 let stack;
 
-describe('Stack', () => {
+describe.only('Stack', () => {
   beforeEach(() => {
     stack = new Stack();
   });
