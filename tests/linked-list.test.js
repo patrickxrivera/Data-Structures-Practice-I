@@ -4,7 +4,7 @@ const DoublyLinkedList = require('../src/doubly-linked-list');
 
 let list;
 
-describe('LinkedList', () => {
+describe.only('LinkedList', () => {
   beforeEach(() => {
     list = new LinkedList();
   });
@@ -30,6 +30,19 @@ describe('LinkedList', () => {
     expect(list.head.value).toBe(1);
     list.addToTail(2);
     expect(list.head.value).toBe(1);
+  });
+
+  it('should update the head after adding a new node', () => {
+    list.addToTail(1);
+    list.addToTail(2);
+    expect(list.head.next.value).toBe(2);
+  });
+
+  it.only('should keep the head connected to the tail after adding multiple nodes', () => {
+    list.addToTail(1);
+    list.addToTail(2);
+    list.addToTail(3);
+    expect(list.head.next.next.value).toBe(3);
   });
 
   it('should return true from contains if a matching value is found and false otherwise', () => {
@@ -63,6 +76,22 @@ describe('LinkedList', () => {
     list.addToTail(4);
     list.removeHead();
     expect(list.contains(1)).toBe(false);
+  });
+
+  it('should invoke a callback function with the value of each node', () => {
+    const addByTwo = (node) => {
+      node.value += 2;
+    };
+
+    list.addToTail(1);
+    list.addToTail(2);
+    list.addToTail(3);
+    list.addToTail(4);
+    list.forEach(addByTwo);
+    expect(list.head.value).toBe(3);
+    expect(list.head.next.value).toBe(4);
+    expect(list.head.next.next.value).toBe(5);
+    expect(list.tail.value).toBe(6);
   });
 });
 
