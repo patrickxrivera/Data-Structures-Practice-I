@@ -9,6 +9,7 @@ class Stack {
   constructor() {
     this.storage = [];
     this.size = 0;
+    this.peekErrorMsg = 'The stack is empty';
   }
 
   size() {
@@ -17,6 +18,7 @@ class Stack {
 
   push(val) {
     this.storage.push(val);
+
     this.size++;
   }
 
@@ -30,8 +32,39 @@ class Stack {
     return poppedVal;
   }
 
+  peek() {
+    if (this.isEmpty()) {
+      return this.peekErrorMsg;
+    }
+
+    const idx = this.getIdx();
+    return this.storage[idx];
+  }
+
+  until(targetVal) {
+    let count = 1;
+
+    for (let i = this.getIdx(); i >= 0; i--) {
+      const currVal = this.storage[i];
+
+      if (currVal === targetVal) {
+        return count;
+      }
+
+      count++;
+    }
+  }
+
+  getIdx() {
+    return this.size - 1;
+  }
+
+  isEmpty() {
+    return this.size <= 0;
+  }
+
   isNotEmpty() {
-    return this.size > 0;
+    return !this.isEmpty();
   }
 }
 

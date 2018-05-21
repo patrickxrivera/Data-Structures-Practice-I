@@ -3,17 +3,19 @@ const Stack = require('../src/stack');
 
 let stack;
 
-describe.only('Stack', () => {
+describe('Stack', () => {
   beforeEach(() => {
     stack = new Stack();
   });
 
-  it('should have the methods "push", "pop", and the property "size"', () => {
+  it('should have the methods "push", "pop", "peek", and the property "size"', () => {
     const hasPush = Object.getPrototypeOf(stack).hasOwnProperty('push');
     const hasPop = Object.getPrototypeOf(stack).hasOwnProperty('pop');
+    const hasPeek = Object.getPrototypeOf(stack).hasOwnProperty('pop');
     const hasSize = Object.getPrototypeOf(stack).hasOwnProperty('size');
     expect(hasPush).toBe(true);
     expect(hasPop).toBe(true);
+    expect(hasPeek).toBe(true);
     expect(hasSize).toBe(true);
   });
 
@@ -68,5 +70,28 @@ describe.only('Stack', () => {
     expect(stack.pop()).toBe(null);
     expect(stack.pop()).toBe('hi');
     expect(stack.pop()).toBe(true);
+  });
+
+  it('should return the most recently added element without removing it', () => {
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+
+    expect(stack.peek()).toBe(3);
+    expect(stack.size).toBe(3);
+  });
+
+  it('should return an error message when peek is used on an empty stack', () => {
+    expect(stack.peek()).toBe('The stack is empty');
+  });
+
+  it('should return a the number of pops until you reach a certain value', () => {
+    stack.push(2);
+    stack.push(5);
+    stack.push(7);
+    stack.push(3);
+    stack.push(6);
+    stack.push(9);
+    expect(stack.until(7)).toBe(4);
   });
 });
