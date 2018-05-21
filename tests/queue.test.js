@@ -3,7 +3,7 @@ const Queue = require('../src/queue');
 
 let queue;
 
-describe('Queue', () => {
+describe.only('Queue', () => {
   beforeEach(() => {
     queue = new Queue();
   });
